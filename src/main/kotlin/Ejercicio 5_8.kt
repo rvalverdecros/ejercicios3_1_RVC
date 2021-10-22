@@ -55,7 +55,7 @@ class Tiempo (var hora: Byte, var min: Byte,
         }
     }
     override fun toString(): String {
-        return ("El tiempo actual es $hora horas, $min minutos y $seg segundos")
+        return ("$hora h $min m $seg s")
     }
 }
 
