@@ -5,7 +5,7 @@ class Tiempo (var hora: Byte, var min: Byte,
     fun comhor(){
         println("¿Que hora es?")
         val hor = readLine()!!.toByte()
-        if (hor in 1..23 ){
+        if (hor in 0..23 ){
             hora = hor
         }else{
             println("Error, no existe esa hora!")
