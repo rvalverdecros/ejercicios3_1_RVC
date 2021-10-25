@@ -13,7 +13,19 @@ class coche (var color: String, val marca:String,
     }
 
 }
+class marc(marca: String) {
+    var mar: String = marca.uppercase()
+        set(value) {
+            field = value.uppercase()
+        }
+    override fun toString(): String {
+        return ("Tu coche es un $mar")
+    }
+
+}
 fun main() {
+    val m1= marc("opel")
+    println(m1.toString())
     val uno= coche("negro","opel","corsa",100,4,"8710PKQ")
     println(uno.toString())
     uno.cambicolor()

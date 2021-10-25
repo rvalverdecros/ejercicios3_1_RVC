@@ -1,4 +1,4 @@
-class Cuenta (var ncuen: Int,  var sal:Double, var vect:Byte) {
+class Cuenta (var ncuen: String,  var sal:Double, var vect:Byte) {
 
     fun recibirAbono(){
         println("¿Cuanto dinero se le suma a la cuenta?")
@@ -11,27 +11,27 @@ class Cuenta (var ncuen: Int,  var sal:Double, var vect:Byte) {
         val dinero = readLine()!!.toDouble()
         sal -= dinero
         println("Tienes actualmente $sal euros en la cuenta")
-    }
-    fun verCuenta(){
-         ncuen = (111111..999999).random()
-        println("Tu numero de cuenta es $ncuen")
-        println("Tienes de saldo $sal")
+        if(sal < 0){
+            println("Ajusta tu presupuesto!! Tienes tu saldo en negativo!")
+        }
     }
 }
 
-class Persona(val dni: String, var vect:Byte){
+class Persona(val dni: String){
     fun anadirCuenta(){
         println("¿A que persona se le añada una nueva cuenta?")
-        vect = readLine()!!.toByte()
+        var vect = readLine()!!.toByte()
         println("¿Cuanto dinero tiene la cuenta?")
-        val money = readLine()!!.toDouble()
-
-
+        var money = readLine()!!.toDouble()
+        println("¿Que nombre le pones a la Cuenta?")
+        var nc = readLine()!!.toString()
+        Cuenta(nc,money,vect)
     }
-    fun esMoroso(){
-    }
-
 }
 fun main() {
-
+val cuenta1= Cuenta("Cuenta1",600.00, 1)
+cuenta1.recibirAbono()
+cuenta1.realizarPago()
+val prueba = Persona("1321321")
+prueba.anadirCuenta()
 }
