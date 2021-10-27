@@ -1,37 +1,61 @@
-class Cuenta (var ncuen: String,  var sal:Double, var vect:Byte) {
+import org.jetbrains.annotations.TestOnly
 
-    fun recibirAbono(){
-        println("¿Cuanto dinero se le suma a la cuenta?")
-        val dinero = readLine()!!.toDouble()
-        sal += dinero
-        println("Tienes actualmente $sal euros en la cuenta")
+class Cuenta(val numCuenta: String, var saldo: Double) {
+    fun recibirAbono() {
+        println("Introduzca el saldo a añadir")
+        val abono = readLine()!!.toDouble()
+        saldo += abono
     }
-    fun realizarPago(){
-        println("¿Cuanto dinero tienes que pagar?")
-        val dinero = readLine()!!.toDouble()
-        sal -= dinero
-        println("Tienes actualmente $sal euros en la cuenta")
-        if(sal < 0){
-            println("Ajusta tu presupuesto!! Tienes tu saldo en negativo!")
+
+    fun realizarPago() {
+        println("Introduzca el saldo a pagar")
+        val pago = readLine()!!.toDouble()
+        saldo -= pago
+    }
+
+    fun hacerTransferencia(importe: Double, cuentaIngreso: Cuenta) {
+        saldo -= importe
+        cuentaIngreso.saldo += importe
+        println("Se ha realizado una transferencia de $importe desde la cuenta $numCuenta a la cuenta ${cuentaIngreso.numCuenta}")
+        println("El nuevo saldo de la cuenta de pago $numCuenta es $saldo")
+        println("El nuevo saldo de la cuenta de ingreso ${cuentaIngreso.numCuenta} es ${cuentaIngreso.saldo}")
+    }
+}
+
+class Persona(val dni: String) {
+    val lisCuenta = arrayListOf<Cuenta>()
+    fun anadirCuenta(cuentaNueva: Cuenta) {
+        if (lisCuenta.size <= 3) {
+            lisCuenta.add(cuentaNueva)
+        } else
+            println("Esta persona ya tiene tres cuentas asociadas")
+    }
+
+    fun esMoroso() {
+        var moroso : Boolean = false
+        val contadorMax = lisCuenta.size
+        var i = 0
+        do{
+        val cActual = lisCuenta[i]
+        if (cActual.saldo < 0){
+            println("Esta persona es morosa")
+            moroso = true
+        }else
+            i++
+        }while (!moroso && i != contadorMax)
+        if(!moroso){
+            println("Esta persona no es morosa")
         }
     }
 }
 
-class Persona(val dni: String){
-    fun anadirCuenta(){
-        println("¿A que persona se le añada una nueva cuenta?")
-        var vect = readLine()!!.toByte()
-        println("¿Cuanto dinero tiene la cuenta?")
-        var money = readLine()!!.toDouble()
-        println("¿Que nombre le pones a la Cuenta?")
-        var nc = readLine()!!.toString()
-        Cuenta(nc,money,vect)
-    }
-}
 fun main() {
-val cuenta1= Cuenta("Cuenta1",600.00, 1)
-cuenta1.recibirAbono()
-cuenta1.realizarPago()
-val prueba = Persona("1321321")
-prueba.anadirCuenta()
+    val cuenta1 = Cuenta("3453453GDG", 600.0)
+    val cuenta2 = Cuenta("2323545DCA",150.0)
+    val persona1 = Persona("4545745H")
+    persona1.anadirCuenta(cuenta1)
+    persona1.anadirCuenta(cuenta2)
+    persona1.esMoroso()
+    cuenta1.hacerTransferencia(20.0, cuenta2)
+
 }
